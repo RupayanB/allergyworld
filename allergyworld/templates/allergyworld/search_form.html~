@@ -1,0 +1,27 @@
+{% extends "allergyworld/base.html" %}
+<!-- search.html -->
+{% block title %}
+Search | Find an allergy friendly restaurant near you.
+{% endblock %}
+
+{% block body %}
+<div class="row">
+  <div class="large-12 columns">
+    <div class="panel">
+
+      <h1>Search</h1>
+      <form action="/allergyworld/search/" method="get">
+	<div class="row">
+	  <div class="small-10 columns">
+	    <input type="text" placeholder="Enter location eg. street or zipcode" name="user_search" required />
+	  </div>
+	  <div class="small-2 columns">
+	    <button class="postfix"  type="submit" value="Search"/>
+	  </div>
+	</div>
+      </form>
+      {% block results %}{% endblock %}
+    </div>
+  </div>
+</div>
+{% endblock %}
