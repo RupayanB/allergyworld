@@ -3,8 +3,11 @@ from django.http import HttpResponse, HttpResponseRedirect
 from allergyworld.models import Restaurant
 import re
 
-def search_form(request):
-    return render(request, 'allergyworld/search_form.html')
+def search_formA(request):
+    return render(request, 'allergyworld/search_formA.html')
+
+def search_formB(request):
+    return render(request, 'allergyworld/search_formB.html')
 
 def search(request):
     # if 'location' in request.GET:
