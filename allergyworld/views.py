@@ -1,6 +1,9 @@
+import sys
+sys.path.append(0, '/Users/rupayanbasu/Documents/djangoTutorial/mysite')
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from allergyworld.models import Restaurant
+import addr2coord.convert, addr2coord
 import re
 
 def search_formA(request):
@@ -18,6 +21,8 @@ def search(request):
     
     if 'location' in request.GET and request.GET['location']:
         q = request.GET['location']
+        q_coord = addr2coord.convert(q)
+        lat, lng = q_coord.split(",")
         restaurants = Restaurant.objects.filter(address__icontains=q)
         return render(request, 'allergyworld/search_results.html',
         	{'results':restaurants, 'query':q})
