@@ -4,6 +4,40 @@
 Restaurant Details
 {% endblock %}
 
+{% block mapjs %}
+
+
+<script>
+  function initialize() {
+    var myLatLng = new google.maps.LatLng({{ restaurant.lat }}, {{ restaurant.lng }})
+  
+    var mapOptions = {
+      zoom: 15,
+      center: myLatLng
+    };
+
+    var map = new google.maps.Map(document.getElementById('map-canvas'),
+        mapOptions);
+    var marker = new google.maps.Marker({
+      position: myLatLng,
+      map: map
+    })
+  }
+
+  function loadScript() {
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&' +
+        'callback=initialize&key=AIzaSyAmtzKMmQcC0mcXxvuUDcXYpocqMZiBAFg';
+    document.body.appendChild(script);
+  }
+
+  window.onload = loadScript;
+</script>
+
+{% endblock %}
+
+
 {% block body %}
 
 <div class="container">
@@ -57,12 +91,12 @@ Restaurant Details
   </div>
     </div>
     <br/>
-    <div class="col-md-6 column">
-      <img alt="140x140" src={{ map_src }} />
-    </div>
+     <div class="col-md-6 column" > 
+      
+    </div> 
   </div>
  
 
 </div> 
-
+<div id="map-canvas"></div>
 {% endblock %}

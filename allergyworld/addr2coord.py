@@ -25,8 +25,8 @@ def convert(addr):
 		lng = result["lng"]
 	except Exception as inst:
 		print inst
-		print "address: " + addr
-		print "json: " + str(content)
+		# print "address: " + addr
+		# print "json: " + str(content)
 		exit(1)
 	return str(lat)+","+str(lng)
 
@@ -62,7 +62,7 @@ def distance(lat1, long1, lat2, long2):
     # in your favorite set of units to get length.
     return arc * 3960
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
 	# fin = open('../restaurants.csv','r')
 	# fout = open('../restaurants_coord.csv','w')
 	# for line in fin:
@@ -75,9 +75,10 @@ if __name__ == "__main__":
 	# 	fout.write(line)
 	# fin.close()
 	# fout.close()
-	test1 = convert("morningside heights")
-	lat1, lng1 = [float(x) for x in test1.split(",")]
-	test2 = convert ("broadway")
-	lat2, lng2 = [float(x) for x in test2.split(",")]
-	print str(distance(lat1, lng1, lat2, lng2))
-
+	#
+	# unit tests
+	# test1 = convert("morningside heights")
+	# lat1, lng1 = [float(x) for x in test1.split(",")]
+	# test2 = convert ("broadway")
+	# lat2, lng2 = [float(x) for x in test2.split(",")]
+	# print str(distance(lat1, lng1, lat2, lng2))

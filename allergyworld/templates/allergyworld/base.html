@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
   <meta charset="utf-8">
   <title>{% block title %}{% endblock %}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,10 +28,18 @@
   <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static 'allergyworld/img/apple-touch-icon-72-precomposed.png' %}">
   <link rel="apple-touch-icon-precomposed" href="{% static 'allergyworld/img/apple-touch-icon-57-precomposed.png' %}"> -->
   <!--link rel="shortcut icon" href="{% static 'allergyworld/img/favicon.png' %}"-->
-  
+  <style>
+      html, body, #map-canvas {
+        height: 100%;
+        margin: 0px;
+        padding: 0px
+      }
+    </style>
   <script type="text/javascript" src="{% static 'allergyworld/js/jquery.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'allergyworld/js/bootstrap.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'allergyworld/js/scripts.js' %}"></script>
+  {% block mapjs %}{% endblock %}
+  
 </head>
 
 <body>

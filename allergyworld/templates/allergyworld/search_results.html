@@ -13,7 +13,7 @@ Search Results
       <center>
       <form role="form" class="form-inline" action='/allergyworld/search/' method='get'>
         <div class="form-group">
-           <input type="text" class="form-control" name="allergy" required placeholder="Allergy"/>
+           <input type="text" class="form-control" name="allergy" placeholder="Allergy"/>
         </div>
         <div class="form-group">
            <input type="text" class="form-control" name="location" required placeholder="Location"/>
@@ -55,8 +55,8 @@ Search Results
           <div class="col-md-4 column">
           </div>
       </div>
-        
-        {% for result in results %}
+       
+        {% for result,dist in results %}
         
         <div class="row clearfix">
           <div class="col-md-4 column">
@@ -64,11 +64,12 @@ Search Results
           <div class="col-md-4 column">
             <a href="{% url 'allergyworld:details' result.id %}">
                 <h4>{{ result.name }}</h4></a>
+                <p><h5>{{ dist }} miles away</h5></p>
           </div>
           <div class="col-md-4 column">
           </div>
         </div>
-       
+        
         {% endfor %}
         
       {% else %}

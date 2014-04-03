@@ -1,9 +1,7 @@
-import sys
-sys.path.append(0, '/Users/rupayanbasu/Documents/djangoTutorial/mysite')
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from allergyworld.models import Restaurant
-import addr2coord.convert, addr2coord
+import addr2coord
 import re
 
 def search_formA(request):
@@ -22,10 +20,30 @@ def search(request):
     if 'location' in request.GET and request.GET['location']:
         q = request.GET['location']
         q_coord = addr2coord.convert(q)
-        lat, lng = q_coord.split(",")
-        restaurants = Restaurant.objects.filter(address__icontains=q)
+        qlat, qlng = [float(x) for x in q_coord.split(',')]
+        rlist = list()
+        max_dist = 1
+        find_more = True
+
+        # while (find_more):
+        for restaurant in Restaurant.objects.all():
+            rlat = float(restaurant.lat)
+            rlng = float(restaurant.lng)
+            dist = addr2coord.distance(qlat,qlng, rlat,rlng)
+            if dist <= max_dist:
+                dist = "%.2f" % dist
+                rlist.append((restaurant,dist))
+                print restaurant.name, str(dist)
+            # if len(rlist) != 0 and max_dist >= 2:
+            #     find_more = False
+            # max_dist += 1
+
+        #sort
+        rlist.sort(key=lambda x:x[1])    
+
+        # restaurants = Restaurant.objects.filter(address__icontains=q)
         return render(request, 'allergyworld/search_results.html',
-        	{'results':restaurants, 'query':q})
+        	{'results':rlist, 'query':q})
 
     else:
     	return render(request, 'allergyworld/search_form.html', {})
