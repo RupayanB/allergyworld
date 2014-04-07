@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from allergyworld.models import Restaurant
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import addr2coord
 import re
 
@@ -11,12 +12,6 @@ def search_formB(request):
     return render(request, 'allergyworld/search_formB.html')
 
 def search(request):
-    # if 'location' in request.GET:
-    #     message = 'You searched for: %r' % request.GET['location']
-    # else:
-    #     message = 'You submitted an empty form.'
-    # return HttpResponse(message)
-    
     if 'location' in request.GET and request.GET['location']:
         q = request.GET['location']
         q_coord = addr2coord.convert(q)
@@ -39,11 +34,24 @@ def search(request):
             # max_dist += 1
 
         #sort
-        rlist.sort(key=lambda x:x[1])    
+        rlist.sort(key=lambda x:x[1])  
+        total_num = len(rlist)
 
+        #for pagination
+        paginator = Paginator(rlist, 7)
+        page = request.GET.get('page')
+        try:
+            results = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page
+            results = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+            results = paginator.page(paginator.num_pages)
+        
         # restaurants = Restaurant.objects.filter(address__icontains=q)
         return render(request, 'allergyworld/search_results.html',
-        	{'results':rlist, 'query':q})
+        	{'results':results, 'query':q, 'request':request, 'total_num':total_num})
 
     else:
     	return render(request, 'allergyworld/search_form.html', {})

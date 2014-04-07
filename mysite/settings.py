@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'allergyworld',
     'csvimport',
+    'bootstrap_pagination',
 )
 
 MIDDLEWARE_CLASSES = (

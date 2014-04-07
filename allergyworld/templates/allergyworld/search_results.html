@@ -1,4 +1,5 @@
 {% extends "allergyworld/base.html" %}
+{% load bootstrap_pagination %}
 <!-- search.html -->
 {% block title %}
 Search Results
@@ -11,21 +12,36 @@ Search Results
       <br/><br/>
 
       <center>
-      <form role="form" class="form-inline" action='/allergyworld/search/' method='get'>
-        <div class="form-group">
-           <input type="text" class="form-control" name="allergy" placeholder="Allergy"/>
-        </div>
-        <div class="form-group">
-           <input type="text" class="form-control" name="location" required placeholder="Location"/>
-        </div>
-        <div class="form-group">
-           <input type="text" class="form-control" name="cuisine" placeholder="Cuisine"/>
-        </div>
-        <div class="form-group">
-         <button type="submit" class="btn btn-default">Search</button>
-       </div>
-      </form>
-    </center>
+          <form role="form" class="form-inline" action='/allergyworld/search/' method='get'>
+            <div class="form-group" >
+               <input list="allergies" class="form-control" name="allergy" placeholder="Allergy"/>
+                <datalist id="allergies">
+            <option value="Gluten">
+            <option value="Nuts">
+            <option value="Lactose">
+            <option value="Egg">
+            <option value="Shell fish">
+          </datalist>
+            </div>
+            <div class="form-group" >
+               <input type="text" class="form-control" name="location" required placeholder="Location" />
+            </div>
+            <div class="form-group" >
+               <input list="cuisines" class="form-control" name="cuisine" placeholder="Cuisine" />
+                <datalist id="cuisines">
+            <option value="American">
+            <option value="Chinese">
+            <option value="Indian">
+            <option value="Italian">
+            <option value="Mexican">
+          </datalist>
+            </div>
+            <div class="form-group">
+             <button type="submit" class="btn btn-default" style="background-color:rgb(144,202,79)">
+              <span class="glyphicon glyphicon-search"></span> Search</button>
+           </div>
+          </form>
+        </center>
       
     </div>
   </div>
@@ -50,7 +66,7 @@ Search Results
           <div class="col-md-4 column">
           </div>
           <div class="col-md-4 column">
-            <p>Found {{ results|length }} restaurant{{ results|pluralize }}.</p>
+            <p>Found {{ total_num }} restaurant{{ results|pluralize }}.</p>
           </div>
           <div class="col-md-4 column">
           </div>
@@ -89,21 +105,7 @@ Search Results
         <div class="col-md-4 column">
         </div>
         <div class="col-md-4 column">
-          <ul class="pagination">
-            <li>
-              <a href="#">Prev</a>
-            </li>
-            <li>
-              <a href="#">1</a>
-            </li>
-            <!-- <li>
-              <a href="#">2</a>
-            </li> -->
-            
-            <li>
-              <a href="#">Next</a>
-            </li>
-          </ul>
+          {% bootstrap_paginate results %}
         </div>
         <div class="col-md-4 column">
         </div>
