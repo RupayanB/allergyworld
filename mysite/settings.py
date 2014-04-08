@@ -50,7 +50,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'mysite.urls'
+ROOT_URLCONF = 'allergyworld.urls'
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 

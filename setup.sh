@@ -9,6 +9,7 @@ git clone https://github.com/RupayanB/allergyworld.git
 sudo apt-get install python-pip
 pip install Django==1.6.2
 pip install django-csvimport
+pip install django-bootstrap-pagination
 
 
 # setup django
