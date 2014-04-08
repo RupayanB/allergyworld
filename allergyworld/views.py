@@ -28,7 +28,6 @@ def search(request):
             if dist <= max_dist:
                 dist = "%.2f" % dist
                 rlist.append((restaurant,dist))
-                print restaurant.name, str(dist)
             # if len(rlist) != 0 and max_dist >= 2:
             #     find_more = False
             # max_dist += 1
