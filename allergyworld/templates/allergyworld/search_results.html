@@ -1,8 +1,83 @@
 {% extends "allergyworld/base.html" %}
+{% load staticfiles %}
 {% load bootstrap_pagination %}
 <!-- search.html -->
 {% block title %}
 Search Results
+{% endblock %}
+
+{% block mapjs %}
+
+
+<script>
+  function initialize() {
+    var myLatLng = new google.maps.LatLng({{ usrlat }}, {{ usrlng }})
+  
+    var mapOptions = {
+      zoom: 15,
+      center: myLatLng
+    };
+
+    var map = new google.maps.Map(document.getElementById('map-canvas'),
+        mapOptions);
+    
+    var userMarker = new google.maps.Marker({
+      position: myLatLng,
+      map: map,
+      animation: google.maps.Animation.DROP,
+      icon: "{% static 'allergyworld/img/blue_MarkerU.png' %}"
+    });
+    //user infobox
+    var usrContentString = '<div id="content">'+
+      '<div id="bodyContent">'+
+      '<strong>You are here.</strong>'+
+      '</div>'+
+      '</div>';
+    var usrInfobox = new google.maps.InfoWindow({
+      content: usrContentString
+    });
+    google.maps.event.addListener(userMarker, 'click', function() {
+      usrInfobox.open(map,userMarker);
+    });
+
+    //restaurant markers
+    {% if results %}
+    {% for result,dist in results %}
+    var latLng{{ result.id }} = new google.maps.LatLng({{ result.lat }}, {{ result.lng }})
+    var marker{{ result.id }} = new google.maps.Marker({
+      position: latLng{{ result.id }},
+      map: map
+    })
+    var contentString{{ result.id }} = '<div id="content">'+
+      '<div id="bodyContent">'+
+      '<strong>'+"{{ result.name }}"+'</strong>'+
+      '</div>'+
+      '</div>';
+    var resultInfobox{{ result.id }} = new google.maps.InfoWindow({
+      content: contentString{{ result.id }}
+    });
+    google.maps.event.addListener(marker{{ result.id }}, 'click', function() {
+      resultInfobox{{ result.id }}.open(map,marker{{ result.id }});
+    });
+    {% endfor %}
+    {% endif %}
+
+    
+    
+
+  }
+
+  function loadScript() {
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&' +
+        'callback=initialize&key=AIzaSyAmtzKMmQcC0mcXxvuUDcXYpocqMZiBAFg';
+    document.body.appendChild(script);
+  }
+
+  window.onload = loadScript;
+</script>
+
 {% endblock %}
 
 {% block body %}
@@ -16,12 +91,15 @@ Search Results
             <div class="form-group" >
                <input list="allergies" class="form-control" name="allergy" placeholder="Allergy"/>
                 <datalist id="allergies">
-            <option value="Gluten">
-            <option value="Nuts">
-            <option value="Lactose">
-            <option value="Egg">
-            <option value="Shell fish">
-          </datalist>
+                  <option value="Peanut">
+                  <option value="Tree nuts">
+                  <option value="Milk">
+                  <option value="Egg">
+                  <option value="Wheat">
+                  <option value="Soy">
+                  <option value="Fish">
+                  <option value="Shellfish">
+                </datalist>
             </div>
             <div class="form-group" >
                <input type="text" class="form-control" name="location" required placeholder="Location" />
@@ -48,68 +126,70 @@ Search Results
   <hr/>
   {% block results %}
   <div class="row clearfix">
-    <div class="col-md-12 column">
+    <!-- div for holding results list -->
+    <div class="col-md-6 column">
       <div class="row clearfix">
-        <div class="col-md-4 column">
-        </div>
-        <div class="col-md-4 column">
+        
+        <div class="col-md-8 column">
           <h3>
-            <p>You searched for <strong>{{ query }}</strong></p>
+            You searched for <strong>{{ query }}</strong>
           </h3>
         </div>
-        <div class="col-md-4 column">
-        </div>
+        
       </div>
       {% if results %}
           
       <div class="row clearfix">
-          <div class="col-md-4 column">
-          </div>
-          <div class="col-md-4 column">
+          
+          <div class="col-md-6 column">
             <p>Found {{ total_num }} restaurant{{ results|pluralize }}.</p>
           </div>
-          <div class="col-md-4 column">
-          </div>
+         
       </div>
        
         {% for result,dist in results %}
         
         <div class="row clearfix">
-          <div class="col-md-4 column">
-          </div>
-          <div class="col-md-4 column">
+          <!-- <div class="col-md-2 column">
+          </div> -->
+          <div class="col-md-6 column">
             <a href="{% url 'allergyworld:details' result.id %}">
                 <h4>{{ result.name }}</h4></a>
                 <p><h5>{{ dist }} miles away</h5></p>
           </div>
-          <div class="col-md-4 column">
-          </div>
+          
         </div>
         
         {% endfor %}
         
       {% else %}
         <div class="row clearfix">
-          <div class="col-md-4 column">
-          </div>
-          <div class="col-md-4 column">
+          <!-- <div class="col-md-4 column">
+          </div> -->
+          <div class="col-md-6 column">
             <p>Sorry, no restaurants matched your search criteria.</p>
           </div>
-          <div class="col-md-4 column">
-          </div>
+          
         </div>
         
       {% endif %}
       
       <div class="row clearfix">
-        <div class="col-md-4 column">
-        </div>
-        <div class="col-md-4 column">
+        <!-- <div class="col-md-4 column">
+        </div> -->
+        <div class="col-md-8 column">
           {% bootstrap_paginate results %}
         </div>
-        <div class="col-md-4 column">
-        </div>
+        <!-- <div class="col-md-4 column">
+        </div> -->
       </div>
+    </div>
+    <!-- div for holding google map for results -->
+    <div class="col-md-6 column">
+      <br/>
+      <div class="col-md-12 column" id="map-canvas" style="height:500px">
+      
+    </div>
     </div>
   </div>
   {% endblock %}
