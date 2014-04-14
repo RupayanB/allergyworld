@@ -156,8 +156,8 @@ Search Results
           {% for result,dist in results %}
         
             <div class="panel panel-default">
-              <div class="panel-heading" id="panel-heading-{{ result.id }}">
-                 <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-results" href="#panel-element-{{ result.id }}" >{{ result.name }}</a>
+              <div class="panel-heading">
+                 <a id="panel-heading-{{ result.id }}" class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-results" href="#panel-element-{{ result.id }}" >{{ result.name }}</a>
               </div>
               <div id="panel-element-{{ result.id }}" class="panel-collapse collapse">
                 <div class="panel-body">
