@@ -49,11 +49,9 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" >
           <ul class="nav navbar-nav" style="vertical-align:center;">
             <li>
-              <a href="#" style="color:black;">Login</a>
+              <a href="#" style="color:black;">Sign Up</a>
             </li>
-            <li>
-              <a href="#" style="color:black;">Register</a>
-            </li>
+            
            
           </ul>
           
@@ -65,15 +63,46 @@
 
           <ul class="nav navbar-nav navbar-right" style="vertical-align:center;">
             <li >
-              <a href="#" style="color:black;">Help</a>
+               <a id="modal-575814" href="#modal-container-help" role="button" data-toggle="modal">Help</a>
             </li>
-           
+          
+      
           </ul>
         </div>
         
       </nav>
+      <!-- Help modal -->
+      <div class="container">
+        <div class="row clearfix">
+          <div class="col-md-12 column">
+            
+            <div class="modal fade" id="modal-container-help" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">
+                      Thank you for visiting AllergyWorld!
+                    </h4>
+                  </div>
+                  <div class="modal-body">
+                    For any questions or feedback, please feel free to reach out to us at allergyworldapp [at] gmail [dot] com.
+                  </div>
+                  <div class="modal-footer">
+                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> 
+                  </div>
+                </div>
+                
+              </div>
+              
+            </div>
+            
+          </div>
+        </div>
+      </div>
       <br/>
       <br/>
+
   {% block body %}{% endblock %}
   
 </body>
