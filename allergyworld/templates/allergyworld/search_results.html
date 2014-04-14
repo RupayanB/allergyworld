@@ -8,7 +8,7 @@ Search Results
 
 {% block mapjs %}
 
-
+<!--script for dynamic google map for restaurant locations -->
 <script>
   function initialize() {
     var myLatLng = new google.maps.LatLng({{ usrlat }}, {{ usrlng }})
@@ -69,10 +69,6 @@ Search Results
     });
     {% endfor %}
     {% endif %}
-
-    
-    
-
   }
 
   function loadScript() {
@@ -89,6 +85,7 @@ Search Results
 {% endblock %}
 
 {% block body %}
+<!-- search bar -->
 <div class="container">
   <div class="row clearfix">
     <div class="col-md-12 column">
@@ -148,12 +145,11 @@ Search Results
       {% if results %}
           
       <div class="row clearfix">
-          
           <div class="col-md-6 column">
             <p>Found {{ total_num }} restaurant{{ results|pluralize }}.</p>
           </div>
-         
       </div>
+      <!-- panel -->
       <div class="row clearfix">
         <div class="col-md-10 column">
           <div class="panel-group" id="panel-results">
@@ -178,32 +174,25 @@ Search Results
         
       {% else %}
         <div class="row clearfix">
-          <!-- <div class="col-md-4 column">
-          </div> -->
-          <div class="col-md-6 column">
+          <div class="col-md-8 column">
             <p>Sorry, no restaurants matched your search criteria.</p>
           </div>
-          
         </div>
         
       {% endif %}
       
       <div class="row clearfix">
-        <!-- <div class="col-md-1 column">
-        </div> -->
         <div class="col-md-8 column">
           {% bootstrap_paginate results %}
         </div>
-        <!-- <div class="col-md-4 column">
-        </div> -->
       </div>
     </div>
+
     <!-- div for holding google map for results -->
     <div class="col-md-6 column">
       <br/>
       <div class="col-md-12 column" id="map-canvas" style="height:500px">
-      
-    </div>
+      </div>
     </div>
   </div>
   {% endblock %}

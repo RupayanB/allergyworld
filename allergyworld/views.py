@@ -20,17 +20,17 @@ def search(request):
         max_dist = 1
         find_more = True
 
-        # while (find_more):
-        for restaurant in Restaurant.objects.all():
-            rlat = float(restaurant.lat)
-            rlng = float(restaurant.lng)
-            dist = addr2coord.distance(qlat,qlng, rlat,rlng)
-            if dist <= max_dist:
-                dist = "%.2f" % dist
-                rlist.append((restaurant,dist))
-            # if len(rlist) != 0 and max_dist >= 2:
-            #     find_more = False
-            # max_dist += 1
+        while (find_more):
+            for restaurant in Restaurant.objects.all():
+                rlat = float(restaurant.lat)
+                rlng = float(restaurant.lng)
+                dist = addr2coord.distance(qlat,qlng, rlat,rlng)
+                if dist <= max_dist:
+                    dist = "%.2f" % dist
+                    rlist.append((restaurant,dist))
+                if len(rlist) != 0 or max_dist >= 5:
+                    find_more = False
+            max_dist += 1
 
         #sort
         rlist.sort(key=lambda x:x[1])  
