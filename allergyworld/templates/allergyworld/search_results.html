@@ -56,8 +56,16 @@ Search Results
     var resultInfobox{{ result.id }} = new google.maps.InfoWindow({
       content: contentString{{ result.id }}
     });
-    google.maps.event.addListener(marker{{ result.id }}, 'click', function() {
-      resultInfobox{{ result.id }}.open(map,marker{{ result.id }});
+    var boxOpen{{ result.id }} = false;
+    google.maps.event.addDomListener(document.getElementById("panel-heading-{{ result.id }}"), 'click', function() {
+      if (boxOpen{{ result.id }} == false) {
+        resultInfobox{{ result.id }}.open(map,marker{{ result.id }});
+        boxOpen{{ result.id }} = true;
+      } else {
+        resultInfobox{{ result.id }}.close();
+        boxOpen{{ result.id }} = false;
+      }
+      
     });
     {% endfor %}
     {% endif %}
@@ -146,36 +154,27 @@ Search Results
           </div>
          
       </div>
-       <div class="panel-group" id="panel-results">
-        {% for result,dist in results %}
+      <div class="row clearfix">
+        <div class="col-md-10 column">
+          <div class="panel-group" id="panel-results">
+          {% for result,dist in results %}
         
-        <!-- <div class="row clearfix">
-           <div class="col-md-2 column">
-          </div> 
-          <div class="col-md-6 column">
-            <a href="{% url 'allergyworld:details' result.id %}">
-                <h4></h4></a>
-                <p><h5></h5></p>
-          </div>
-          
-        </div> -->
-
-        
-        <div class="panel panel-default">
-          <div class="panel-heading">
-             <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-results" href="#panel-element-{{ result.id }}" >{{ result.name }}</a>
-          </div>
-          <div id="panel-element-{{ result.id }}" class="panel-collapse collapse">
-            <div class="panel-body">
-              {{ dist }} miles away
+            <div class="panel panel-default">
+              <div class="panel-heading" id="panel-heading-{{ result.id }}">
+                 <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-results" href="#panel-element-{{ result.id }}" >{{ result.name }}</a>
+              </div>
+              <div id="panel-element-{{ result.id }}" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <address>{{ result.address }}</address>
+                  <a href={{ result.website }}>Website</a>
+                </div>
+              </div>
             </div>
+        
+          {% endfor %}
           </div>
         </div>
-        
-        
-        
-        {% endfor %}
-        </div>
+      </div>
         
       {% else %}
         <div class="row clearfix">
@@ -190,7 +189,7 @@ Search Results
       {% endif %}
       
       <div class="row clearfix">
-        <!-- <div class="col-md-4 column">
+        <!-- <div class="col-md-1 column">
         </div> -->
         <div class="col-md-8 column">
           {% bootstrap_paginate results %}
