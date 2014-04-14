@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
-from allergyworld.models import Restaurant
+from allergyworld.models import Restaurant, User
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import addr2coord
 import re
@@ -53,7 +53,14 @@ def search(request):
         	{'results':results, 'query':q, 'request':request, 'total_num':total_num, 'usrlat':qlat, 'usrlng':qlng})
 
     else:
-    	return render(request, 'allergyworld/search_form.html', {})
+    	return render(request, 'allergyworld/search_formA.html', {})
+
+def signup(request):
+    name = request.GET['signUpName']
+    email = request.GET['signUpEmail']
+    allergy = request.GET['signUpAllergy']
+    User.objects.create_user(name,allergy,email)
+    return render(request, 'allergyworld/search_formA.html', {})
 
 def details(request, r_id):
     r = get_object_or_404(Restaurant, pk=r_id);

@@ -7,3 +7,15 @@ class Restaurant(models.Model):
     website = models.CharField(max_length=200)
     lat = models.CharField(max_length=100)
     lng = models.CharField(max_length=100)
+
+class UserManager(models.Manager):
+	def create_user(self, name, allergy, email):
+		user = self.create(name=name,allergy=allergy,email=email)
+		return user
+
+class User(models.Model):
+	name = models.CharField(max_length=100)
+	allergy = models.CharField(max_length=100)
+	email = models.CharField(max_length=100)
+
+	objects = UserManager()
