@@ -62,19 +62,19 @@ def distance(lat1, long1, lat2, long2):
     # in your favorite set of units to get length.
     return arc * 3960
 
-# if __name__ == "__main__":
-	# fin = open('../restaurants.csv','r')
-	# fout = open('../restaurants_coord.csv','w')
-	# for line in fin:
-	# 	line = line.strip()
-	# 	if line.find('name,website,address') != -1:
-	# 		continue
-	# 	address = line.split(',\"')[1].strip("\"")
-	# 	coords = convert(address)
-	# 	line = line + "," + coords + "\n"
-	# 	fout.write(line)
-	# fin.close()
-	# fout.close()
+if __name__ == "__main__":
+	fin = open('../restaurants.csv','r')
+	fout = open('../restaurants_coord.csv','w')
+	for line in fin:
+		line = line.strip()
+		if line.find('name,website,address') != -1:
+			continue
+		address = line.split(',\"')[1].strip("\"")
+		coords = convert(address)
+		line = line + "," + coords + "\n"
+		fout.write(line)
+	fin.close()
+	fout.close()
 	#
 	# unit tests
 	# test1 = convert("morningside heights")
