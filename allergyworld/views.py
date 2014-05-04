@@ -12,9 +12,10 @@ def search_formB(request):
     return render(request, 'allergyworld/search_formB.html')
 
 def search(request):
+    key = 'AIzaSyAmtzKMmQcC0mcXxvuUDcXYpocqMZiBAFg'
     if 'location' in request.GET and request.GET['location']:
         q = request.GET['location']
-        q_coord = addr2coord.convert(q)
+        q_coord = addr2coord.convert(key, q)
         qlat, qlng = [float(x) for x in q_coord.split(',')]
         rlist = list()
         max_dist = 1
