@@ -7,6 +7,8 @@ class Restaurant(models.Model):
     website = models.CharField(max_length=200)
     lat = models.CharField(max_length=100)
     lng = models.CharField(max_length=100)
+    rating = models.CharField(max_length=10)
+    price_level = models.CharField(max_length=10)
 
 class UserManager(models.Manager):
 	def create_user(self, name, allergy, email):
