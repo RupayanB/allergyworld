@@ -43,35 +43,42 @@ Search Results
     //restaurant markers
     {% if results %}
     {% for result,dist in results %}
-    var latLng{{ result.id }} = new google.maps.LatLng({{ result.lat }}, {{ result.lng }})
-    var marker{{ result.id }} = new google.maps.Marker({
-      position: latLng{{ result.id }},
-      map: map
-    })
-    var contentString{{ result.id }} = '<div id="content">'+
-      '<div id="bodyContent">'+
-      '<strong>'+"{{ result.name }}"+'</strong>'+
-      '</div>'+
-      '</div>';
-    var resultInfobox{{ result.id }} = new google.maps.InfoWindow({
-      content: contentString{{ result.id }}
-    });
-    var boxOpen{{ result.id }} = false;
-    google.maps.event.addDomListener(document.getElementById("panel-heading-{{ result.id }}"), 'click', function() {
-      if (boxOpen{{ result.id }} == false) {
-        resultInfobox{{ result.id }}.open(map,marker{{ result.id }});
-        boxOpen{{ result.id }} = true;
-      } else {
-        resultInfobox{{ result.id }}.close();
-        boxOpen{{ result.id }} = false;
-      }
-      
-    });
+        var latLng{{ result.id }} = new google.maps.LatLng({{ result.lat }}, {{ result.lng }})
+        var marker{{ result.id }} = new google.maps.Marker({
+          position: latLng{{ result.id }},
+          map: map
+        })
+        var contentString{{ result.id }} = '<div id="content">'+
+          '<div id="bodyContent">'+
+          '<strong>'+"{{ result.name }}"+'</strong>'+
+          '</div>'+
+          '</div>';
+        var resultInfobox{{ result.id }} = new google.maps.InfoWindow({
+          content: contentString{{ result.id }}
+        });
+        
+        var currentlyOpen = null;
+        google.maps.event.addDomListener(document.getElementById("panel-heading-{{ result.id }}"), 'click', function() {
+          if (currentlyOpen != null){
+              currentlyOpen.close();
+          }
+          if (resultInfobox{{ result.id }} != currentlyOpen){
+            resultInfobox{{ result.id }}.open(map,marker{{ result.id }});
+            currentlyOpen = resultInfobox{{ result.id }};
+          }
+          else{
+            currentlyOpen = null;
+          }
+        });
+        
+
     {% endfor %}
     {% endif %}
   }
 
+
   function loadScript() {
+
     var script = document.createElement('script');
     script.type = 'text/javascript';
     script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&' +
@@ -129,6 +136,7 @@ Search Results
     </div>
   </div>
   <hr/>
+  
   {% block results %}
   <div class="row clearfix">
     <!-- div for holding results list -->
@@ -161,9 +169,28 @@ Search Results
               </div>
               <div id="panel-element-{{ result.id }}" class="panel-collapse collapse">
                 <div class="panel-body">
-                  Google+ Ratings: {{ result.rating }}</br>
-                  <address>{{ result.address }}</address>
-                  <a href={{ result.website }}>Website</a>
+                  <text>Address: {{ result.address }}</text></br>
+                  <text>Price Level: <strong id='price-{{ result.id }}'></strong></text>
+                  <input id="star-{{ result.id }}" type="number" class="rating" data-size='xs' >
+                    <script>
+
+                       $("#star-{{ result.id }}").rating('update', {{ result.rating }});
+                       pl = {{ result.price_level }};
+                       var dollars = ''
+                       if (pl == 1){
+                        dollars = "$";
+                       }
+                       else if (pl == 2){
+                        dollars = "$$";
+                       }
+                       else {
+                        dollars = "$$$";
+                       }
+                       $("#price-{{ result.id }}").text(dollars);
+                      // alert('hi');
+                    </script>
+                  
+                <a href={{ result.website }}>Website</a>
                 </div>
               </div>
             </div>

@@ -12,8 +12,14 @@
   
   <link href="{% static 'allergyworld/css/bootstrap.min.css' %}" rel="stylesheet">
   <link href="{% static 'allergyworld/css/style.css' %}" rel="stylesheet">
-  <!-- Google Fonts -->
-  <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+  <link href="{% static 'allergyworld/css/star-rating.min.css' %}" rel="stylesheet">
+  <script type="text/javascript" src="{% static 'allergyworld/js/jquery.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'allergyworld/js/bootstrap.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'allergyworld/js/scripts.js' %}"></script>
+  <script type="text/javascript" src="{% static 'allergyworld/js/star-rating.min.js' %}"></script>
+  <!-- Ajax support for form submission -->
+  <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>  -->
+  <script src="http://malsup.github.com/jquery.form.js"></script> 
 
   <style>
       html, body, #map-canvas {
@@ -21,10 +27,18 @@
         margin: 0px;
         padding: 0px
       }
-    </style>
-  <script type="text/javascript" src="{% static 'allergyworld/js/jquery.min.js' %}"></script>
-  <script type="text/javascript" src="{% static 'allergyworld/js/bootstrap.min.js' %}"></script>
-  <script type="text/javascript" src="{% static 'allergyworld/js/scripts.js' %}"></script>
+      .glyphicon {
+        display : none;
+      }
+      .star-rating-rtl .caption {
+        display: none;
+      }
+      .label {
+        display : none;
+      }
+  </style>
+
+  
   {% block mapjs %}{% endblock %}
  
  <!-- Google Analytics tracking code -->
@@ -39,19 +53,16 @@
 
   </script> 
 
-  <!-- Ajax support for form submission -->
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script> 
-  <script src="http://malsup.github.com/jquery.form.js"></script> 
- 
-    <script> 
-        // wait for the DOM to be loaded 
-        $(document).ready(function() { 
-            // bind 'signupForm' and provide a simple callback function 
-            $('#signupForm').ajaxForm(function() { 
-                document.getElementById('signupMsg').style.display='block'; 
-            }); 
-        }); 
-    </script> 
+  <script> 
+    // wait for the DOM to be loaded 
+    $(document).ready(function() { 
+      // bind 'signupForm' and provide a simple callback function 
+      $('#signupForm').ajaxForm(function() { 
+          document.getElementById('signupMsg').style.display='block'; 
+      }); 
+    }); 
+  </script> 
+
 </head>
 
 <body>
@@ -197,7 +208,7 @@
       <br/>
 
   {% block body %}{% endblock %}
-  
+
 </body>
 </html>
 

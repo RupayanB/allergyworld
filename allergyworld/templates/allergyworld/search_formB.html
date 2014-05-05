@@ -1,140 +1,37 @@
-
-{% extends "allergyworld/base2.html" %}
 {% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
 
-{% block title %}
-AllergyWorld
-{% endblock %}
+<link href="{% static 'allergyworld/css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'allergyworld/css/star-rating.min.css' %}" rel="stylesheet">
+<script type="text/javascript" src="{% static 'allergyworld/js/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'allergyworld/js/star-rating.min.js' %}"></script>
 
-{% block body %}
+<style>
+.glyphicon {
+	display : none;
+}
+.star-rating-rtl .caption {
+	display: none;
+}
+.label {
+	display : none;
+}
+</style>
+</head>
 
-<div id="myCarousel" class="carousel slide" data-ride="carousel">
-      <!-- Indicators -->
-      <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2"></li>
-      </ol>
-      <div class="carousel-inner">
-        <div class="item active">
-          <img src="{% static 'allergyworld/img/food3.jpg' %}" alt="First slide" style="width:100%;height:500px" >
-          <div class="container">
-            <div class="carousel-caption">
-              <h1>Find an allergy-friendly restaurant near you.</h1>
-              
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <img src="{% static 'allergyworld/img/food2.jpg' %}" alt="Second slide" style="width:100%;height:500px" >
-          <div class="container">
-            <div class="carousel-caption">
-              <h1>Find an allergy-friendly restaurant near you.</h1>
-              
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <img src="{% static 'allergyworld/img/food1.jpg' %}" alt="Third slide" style="width:100%;height:500px" >
-          <div class="container">
-            <div class="carousel-caption">
-              <h1>Find an allergy-friendly restaurant near you.</h1>
-             
-              
-            </div>
-          </div>
-        </div>
-      </div>
-      <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
-      <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
-    </div><!-- /.carousel -->
-
-<div class="container">
-	<div class="row clearfix">
-		<div class="col-md-12 column">
-			<br/>
-
-		      <center>
-		      <form role="form" class="form-inline" action='/allergyworld/search/' method='get'>
-		        <div class="form-group" >
-		           <input list="allergies" class="form-control" name="allergy" placeholder="Allergy"/>
-		           	<datalist id="allergies">
-					  <option value="Gluten">
-					  <option value="Nuts">
-					  <option value="Lactose">
-					  <option value="Egg">
-					  <option value="Shell fish">
-					</datalist>
-		        </div>
-		        <div class="form-group" >
-		           <input type="text" class="form-control" name="location" required placeholder="Location" />
-		        </div>
-		        <div class="form-group" >
-		           <input list="cuisines" class="form-control" name="cuisine" placeholder="Cuisine" />
-		           	<datalist id="cuisines">
-					  <option value="American">
-					  <option value="Chinese">
-					  <option value="Indian">
-					  <option value="Italian">
-					  <option value="Mexican">
-					</datalist>
-		        </div>
-		        <div class="form-group">
-		         <button type="submit" class="btn btn-default" style="background-color:rgb(144,202,79)">
-		         	<span class="glyphicon glyphicon-search"></span> Search</button>
-		       </div>
-		      </form>
-		    </center>
-		</div>
-	</div>
+<body>
+	Hello!
 	
+	<input id='star' type="number" class="rating" data-size='xs' >
+	<script>
+	function initRatings() {
+		$("#star").rating('update', 3);
+	}
+	initRatings();
+	</script>
 
-		<!-- <div class="col-md-4 column">
-			<img alt="allergyworld" src="{% static 'allergyworld/img/logo.jpg' %}" />
-		</div>
-		<div class="col-md-6 column">
-			<div class="row clearfix">
-				<div class="col-md-12 column">
-					<h1 style="font-family:Oswald;">
-						Find an allergy-friendly restaurant
-					</h1>
-				</div>
-			</div>
-			<div class="row clearfix">
-				<div class="col-md-8 column">
-					<form role="form" action="/allergyworld/search/" method="get">
-						
-						<div class="form-group">
-							 <label for="exampleInputPassword1">Location</label><input type="text" class="form-control" name="location" required/>
-						</div>
-						<div class="form-group">
 
-							 <label for="exampleInputEmail1">Allergy/Intolerance</label><input type="text" class="form-control" name="allergy"/>
-
-						</div>
-						<div class="form-group">
-							 <label for="exampleInputPassword1">Cuisine</label><input type="text" class="form-control" name="cuisine" />
-						</div>
-						 <button type="submit" class="btn btn-default">Search</button>
-					</form>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-2 column">
-		</div> -->
-	
-	<br/>
-	<br/>
-	<div class="row clearfix">
-		<div class="col-md-3 column">
-			<!-- <img alt="top8" src="{% static 'allergyworld/img/top8.jpg' %}" style="opacity:0.2"/> -->
-		</div>
-		<div class="col-md-3 column">
-			<!-- <img alt="top8" src="{% static 'allergyworld/img/top8.jpg' %}" style="opacity:0.2"/> -->
-		</div>
-		<div class="col-md-3 column">
-			<!-- <img alt="top8" src="{% static 'allergyworld/img/top8.jpg' %}" style="opacity:0.2"/> -->
-		</div>
-	</div>
-</div>
-{% endblock %}
+</body>
+</html>

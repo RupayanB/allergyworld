@@ -1,0 +1,16 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<head>
+<script type="text/javascript" src="{% static 'allergyworld/js/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'allergyworld/js/jquery.raty.js' %}"></script>
+</head>
+<body>
+	<div id="star"></div>
+
+</body>
+<script type="text/javascript">
+  $(function() {
+    $('#star').raty();
+  });
+</script>
+</html>
